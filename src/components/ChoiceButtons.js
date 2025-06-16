@@ -10,11 +10,11 @@ const ChoiceButtons = ({ options, handleChoice, disabled }) => {
                     variant="contained"
                     color="primary"
                     sx={{ marginBottom: 2 }}
-                    onClick={() => handleChoice(option.nextId)}
+                    onClick={() => handleChoice(option.next())}
                     fullWidth
                     disabled={disabled}
                 >
-                    {option.label}
+                    {option.text}
                 </Button>
             ))}
         </Box>

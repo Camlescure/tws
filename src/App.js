@@ -78,7 +78,7 @@ function App() {
             color: '#1A237E', // Dark blue color for the title
           }}
         >
-          👔 Open Space Simulator
+          💍 Trad Wife Simulator
         </Typography>
         {currentStory.emoji && <DropEmoji emoji={currentStory.emoji} count={50} />}
         {!isNameSet ? (
@@ -91,9 +91,9 @@ function App() {
               onTextLoadComplete={handleTextLoadComplete}
             />
             {/* Check if there are options or a coinflip */}
-            {currentStory.options && currentStory.options.length > 0 ? (
+            {currentStory.choices() && currentStory.choices().length > 0 ? (
               <ChoiceButtons
-                options={currentStory.options}
+                options={currentStory.choices()}
                 handleChoice={handleChoice}
                 disabled={loading}
               />
