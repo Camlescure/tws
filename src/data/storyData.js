@@ -11,7 +11,7 @@ const storyData = {
     "1": {
         text: "Avant de descendre à la couisine, tu t'arrêtes dans ton dressing. Que vas-tu porter aujourd'hui ?",
         choices: () => [
-            { text: "Un pyjama pilou-pilou, c'est tout doux!", next: () => "2", mood: -30 },
+            { text: "Un pyjama pilou-pilou, c'est tout doux!", next: () => "2", moodDelta: -30 },
             { text: "Une petite robe de printemps à fleur, en ajoutant ton tablier par dessus. Classique, efficace, indémodable", next: () => "2" }
         ],
         location:"Dressing"
@@ -19,8 +19,8 @@ const storyData = {
     "2": {
         text: "Arrivée dans la couisine, tu t'affaires à préparer le petit déjeuner de toute la famille. Qu'est ce que tu vas leur préparer de bon aujourd'hui ?",
         choices: () => [
-            { text: "Café noir, tartoche de nut' et basta", next: () => "2a", price: -4, mood: 20, nextIfPilou: "2c" },
-            { text: "Oeufs brouillés, charcuterie, jus d'orange pressé, café chaud et gaufres", next: () => "2b", mood: -20, price: -15, nextIfPilou: "2c" }
+            { text: "Café noir, tartoche de nut' et basta", next: () => "2a", price: -4, moodDelta: 20, nextIfPilou: "2c" },
+            { text: "Oeufs brouillés, charcuterie, jus d'orange pressé, café chaud et gaufres", next: () => "2b", moodDelta: -20, price: -15, nextIfPilou: "2c" }
         ],
         location: "Couisine"
     },
@@ -62,7 +62,8 @@ const storyData = {
     "FIN1": {
         text: "0 enfant ! Réveille toi ma grande ! On t'héberge pas pour ta laine ! Il s'agirait de s'y filer, ton mari a besoin d'une descendance.",
         choices: () => [],
-        backgroundImage: ""
+        location: "Bouh",
+        emoji: "🐐"
     }
 };
 

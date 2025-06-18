@@ -10,7 +10,7 @@ const ChoiceButtons = ({ options, handleChoice, disabled }) => {
                     variant="contained"
                     color="primary"
                     sx={{ marginBottom: 2 }}
-                    onClick={() => handleChoice(option.next())}
+                    onClick={() => handleChoice(option.next(), option.moodDelta)}
                     fullWidth
                     disabled={disabled}
                 >

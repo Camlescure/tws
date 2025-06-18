@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, Typography } from '@mui/material';
+import MoodJauge from '../MoodJauge';
 
 const StoryCard = ({ text, onTextLoadComplete }) => {
     const [displayedText, setDisplayedText] = useState('');
