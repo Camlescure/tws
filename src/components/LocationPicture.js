@@ -3,12 +3,14 @@ import ChambrePicture from '../assets/chambre.jpg';
 import CouisinePicture from '../assets/couisine.jpg';
 import DressingPicture from '../assets/dressing.jpg';
 import BouhPicture from '../assets/bouh.jpg';
+import ChambrePicture from '../assets/chambre_enfant.jpg';
 
 const LocationsImages = {
     Couisine: CouisinePicture,
     Dressing: DressingPicture,
     Chambre: ChambrePicture,
     Bouh: BouhPicture,
+    ChambreEnfant: ChambreEnfant,
 };
 
 const LocationPicture = ({ place: location }) => {
