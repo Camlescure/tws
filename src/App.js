@@ -6,20 +6,19 @@ import LocationPicture from './components/LocationPicture';
 import NameForm from './components/NameForm'; // Import du nouveau composant
 import StoryCard from './components/StoryCard';
 import storyData from './data/storyData';
-import { useMood } from './MoodContext';
 import MoodJauge from './MoodJauge';
+import { initTwsModel } from './data/storyData';
 
 function App() {
   const [currentStoryId, setCurrentStoryId] = useState(1);
   const [loading, setLoading] = useState(true);
   const [userName, setUserName] = useState("");
   const [isNameSet, setIsNameSet] = useState(false);
-  const { setMood } = useMood();
+  const [twsModel, setTwsModel] = useState(initTwsModel);
 
   // Handles user choices or coinflip results
-  const handleChoice = (nextId, moodDelta) => {
+  const handleChoice = (nextId) => {
     setLoading(true);
-    setMood(m => Math.max(-100, Math.min(100, m + (moodDelta || 0))));
     setCurrentStoryId(nextId);
   };
 
@@ -90,7 +89,7 @@ function App() {
           <NameForm userName={userName} setUserName={setUserName} handleSubmit={handleNameSubmit} />
         ) : (
           <div>
-             <MoodJauge />
+            <MoodJauge twsModel={twsModel} />
             <StoryCard
               text={getPersonalizedStory(currentStory.text, userName)}
               onTextLoadComplete={handleTextLoadComplete}
@@ -98,6 +97,8 @@ function App() {
             {/* Check if there are options or a coinflip */}
             {currentStory.choices() && currentStory.choices().length > 0 ? (
               <ChoiceButtons
+                twsModel={twsModel}
+                setTwsModel={setTwsModel}
                 options={currentStory.choices()}
                 handleChoice={handleChoice}
                 disabled={loading}

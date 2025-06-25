@@ -1,4 +1,9 @@
-// Example story nodes
+export var initTwsModel = {
+    mood: 50,
+    pilou: false,
+    wallet: 30
+};
+
 const storyData = {
     "0": {
         text: "Comme chaque matin, tu te réveilles, il est 5h. Tu as toujours été une lève-tôt, c'est important, il faut préparer le petit déjeuner de toute la famille. Qui ne rêve pas de se lever avec l'odeur du café fumant ? Tu sors de ton lit en douceur pour ne pas réveiller ton mari, et quitte la chambre",
@@ -6,21 +11,21 @@ const storyData = {
             { text: "Le plancher grince", next: () => "1" },
             { text: "Le plancher ne grince pas", next: () => "1" }
         ],
-        location:"Chambre"
+        location: "Chambre"
     },
     "1": {
         text: "Avant de descendre à la couisine, tu t'arrêtes dans ton dressing. Que vas-tu porter aujourd'hui ?",
         choices: () => [
-            { text: "Un pyjama pilou-pilou, c'est tout doux!", next: () => "2", moodDelta: -30 },
+            { text: "Un pyjama pilou-pilou, c'est tout doux!", next: (twsModel) => { twsModel.mood -= 30; twsModel.pilou = true; return "2" } },
             { text: "Une petite robe de printemps à fleur, en ajoutant ton tablier par dessus. Classique, efficace, indémodable", next: () => "2" }
         ],
-        location:"Dressing"
+        location: "Dressing"
     },
     "2": {
         text: "Arrivée dans la couisine, tu t'affaires à préparer le petit déjeuner de toute la famille. Qu'est ce que tu vas leur préparer de bon aujourd'hui ?",
         choices: () => [
-            { text: "Café noir, tartoche de nut' et basta", next: () => "2a", price: -4, moodDelta: 20, nextIfPilou: "2c" },
-            { text: "Oeufs brouillés, charcuterie, jus d'orange pressé, café chaud et gaufres", next: () => "2b", moodDelta: -20, price: -15, nextIfPilou: "2c" }
+            { text: "Café noir, tartoche de nut' et basta", next: (twsModel) => { twsModel.mood -= 20; twsModel.wallet -= 4; return twsModel.pilou ? "2c" : "2a" } },
+            { text: "Oeufs brouillés, charcuterie, jus d'orange pressé, café chaud et gaufres", next: (twsModel) => { twsModel.mood -= 20; twsModel.wallet -= 15; return twsModel.pilou ? "2c" : "2b" } }
         ],
         location: "Couisine"
     },
@@ -66,7 +71,7 @@ const storyData = {
     "4a": {
         text: "Jean-Eude, ton troisième, te répond d'une voix faible : 'Je me sens malade mère'. Effectivement, en posant ta main sur son front, tu le sens brûlant. C'est sûr, il ne pourra pas aller à l'école aujourd'hui",
         choices: () => [
-            { text: "'Reste à la maison mon coeur, maman va s'occuper de toi.'", next: () => "5"}
+            { text: "'Reste à la maison mon coeur, maman va s'occuper de toi.'", next: () => "5" }
         ],
         location: "ChambreEnfant"
     },
@@ -78,7 +83,7 @@ const storyData = {
         ],
         location: "Couisine"
     },
-    
+
     "5a": {
         text: "",
         choices: () => [
