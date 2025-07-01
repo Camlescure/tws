@@ -2,11 +2,15 @@ import { Box, Slide } from '@mui/material';
 import ChambrePicture from '../assets/chambre.jpg';
 import CouisinePicture from '../assets/couisine.jpg';
 import DressingPicture from '../assets/dressing.jpg';
+import BouhPicture from '../assets/bouh.jpg';
+import ChambreEnfantPicture from '../assets/chambre_enfant.jpg';
 
 const LocationsImages = {
     Couisine: CouisinePicture,
     Dressing: DressingPicture,
     Chambre: ChambrePicture,
+    Bouh: BouhPicture,
+    ChambreEnfant: ChambreEnfantPicture,
 };
 
 const LocationPicture = ({ place: location }) => {

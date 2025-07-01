@@ -1,4 +1,9 @@
-// Example story nodes
+export var initTwsModel = {
+    mood: 50,
+    pilou: false,
+    wallet: 30
+};
+
 const storyData = {
     "0": {
         text: "Comme chaque matin, tu te réveilles, il est 5h. Tu as toujours été une lève-tôt, c'est important, il faut préparer le petit déjeuner de toute la famille. Qui ne rêve pas de se lever avec l'odeur du café fumant ? Tu sors de ton lit en douceur pour ne pas réveiller ton mari, et quitte la chambre",
@@ -6,21 +11,21 @@ const storyData = {
             { text: "Le plancher grince", next: () => "1" },
             { text: "Le plancher ne grince pas", next: () => "1" }
         ],
-        location:"Chambre"
+        location: "Chambre"
     },
     "1": {
         text: "Avant de descendre à la couisine, tu t'arrêtes dans ton dressing. Que vas-tu porter aujourd'hui ?",
         choices: () => [
-            { text: "Un pyjama pilou-pilou, c'est tout doux!", next: () => "2", mood: -30 },
+            { text: "Un pyjama pilou-pilou, c'est tout doux!", next: (twsModel) => { twsModel.mood -= 30; twsModel.pilou = true; return "2" } },
             { text: "Une petite robe de printemps à fleur, en ajoutant ton tablier par dessus. Classique, efficace, indémodable", next: () => "2" }
         ],
-        location:"Dressing"
+        location: "Dressing"
     },
     "2": {
         text: "Arrivée dans la couisine, tu t'affaires à préparer le petit déjeuner de toute la famille. Qu'est ce que tu vas leur préparer de bon aujourd'hui ?",
         choices: () => [
-            { text: "Café noir, tartoche de nut' et basta", next: () => "2a", price: -4, mood: 20, nextIfPilou: "2c" },
-            { text: "Oeufs brouillés, charcuterie, jus d'orange pressé, café chaud et gaufres", next: () => "2b", mood: -20, price: -15, nextIfPilou: "2c" }
+            { text: "Café noir, tartoche de nut' et basta", next: (twsModel) => { twsModel.mood -= 20; twsModel.wallet -= 4; return twsModel.pilou ? "2c" : "2a" } },
+            { text: "Oeufs brouillés, charcuterie, jus d'orange pressé, café chaud et gaufres", next: (twsModel) => { twsModel.mood -= 20; twsModel.wallet -= 15; return twsModel.pilou ? "2c" : "2b" } }
         ],
         location: "Couisine"
     },
@@ -45,24 +50,53 @@ const storyData = {
         ],
         location: "Couisine"
     },
+    // TODO ajouter le nombre d'enfants global
     "3": {
         text: "Ton mari parti au travail, tu te retrouves donc seule dans la couisine. Il est temps de réveiller les enfants. Mais d'ailleurs, tu as combien d'enfants ?",
         choices: () => [
             { text: "Malheureusement, 0. Tu n'as pas encore eu le loisir d'accueillir la vie, mais ça ne saurait tarder, chaque chose en son temps.", next: () => "FIN1" },
-            { text: "2 enfants, un garçon et une fille, ce sont des amours", next: () => [] },
-            { text: "9 enfants ! Et tu ne comptes pas t'arrêter là. Tu adores prendre soin de ta petite tribu", next: () => "" }
+            { text: "2 enfants, un garçon et une fille, ce sont des amours", next: () => "4" },
+            { text: "9 enfants ! Et tu ne comptes pas t'arrêter là. Tu adores prendre soin de ta petite tribu", next: () => "4" }
         ],
         location: "Couisine"
     },
     "4": {
+        text: "Tu montes dans la chambre des enfants pour les réveiller. Comment les réveilles-tu ?",
+        choices: () => [
+            { text: "Tu es de bonne humeur, tu les réveilles tendrement. Bien dormi mon coeur ? ", next: () => "4a" },
+            { text: "Tu n'as pas le temps. Tu cries dans l'escalier : 'ALLEZ, DEBOUT, C'EST L'HEURE DE SE LEVER'", next: () => "5" }
+        ],
+        location: "ChambreEnfant"
+    },
+    "4a": {
+        text: "Jean-Eude, ton troisième, te répond d'une voix faible : 'Je me sens malade mère'. Effectivement, en posant ta main sur son front, tu le sens brûlant. C'est sûr, il ne pourra pas aller à l'école aujourd'hui",
+        choices: () => [
+            { text: "'Reste à la maison mon coeur, maman va s'occuper de toi.'", next: () => "5" }
+        ],
+        location: "ChambreEnfant"
+    },
+    "5": {
+        text: "Tu prépares le petit déjeuner des enfants.",
+        choices: () => [
+            { text: "Tu leur concoctes un bon petit déjeuner, ils ont besoin de force pour leur journée.", next: () => "5a" }, // TODO si on choisit cette option, il faut calculer si on a assez de thune (5$ par enfant)
+            { text: "Ils mangeront les restes de leurs pères, des tartines suffiront.", next: () => "5b" }
+        ],
+        location: "Couisine"
+    },
+
+    "5a": {
         text: "",
-        choices: () => [],
-        backgroundImage: ""
+        choices: () => [
+            {},
+            {}
+        ],
+        location: "Couisine"
     },
     "FIN1": {
         text: "0 enfant ! Réveille toi ma grande ! On t'héberge pas pour ta laine ! Il s'agirait de s'y filer, ton mari a besoin d'une descendance.",
         choices: () => [],
-        backgroundImage: ""
+        location: "Bouh",
+        emoji: "🐐"
     }
 };
 
