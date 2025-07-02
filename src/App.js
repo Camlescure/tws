@@ -1,5 +1,5 @@
-import { Box, Button, Container, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import { Box, Container, Typography } from '@mui/material';
+import { useState } from 'react';
 import ChoiceButtons from './components/ChoiceButtons';
 import DropEmoji from './components/DropEmoji';
 import LocationPicture from './components/LocationPicture';
@@ -7,7 +7,7 @@ import NameForm from './components/NameForm'; // Import du nouveau composant
 import StoryCard from './components/StoryCard';
 import storyData from './data/storyData';
 import MoodJauge from './MoodJauge';
-import { initTwsModel } from './data/storyData';
+import { initTwsModel, modelHooks } from './data/storyData';
 
 function App() {
   const [currentStoryId, setCurrentStoryId] = useState(1);
@@ -19,15 +19,17 @@ function App() {
   // Handles user choices or coinflip results
   const handleChoice = (nextId) => {
     setLoading(true);
-    setCurrentStoryId(nextId);
-  };
 
-  // Handles coin flip, randomly selects an outcome
-  const handleCoinflip = (coinflipOptions) => {
-    setLoading(true);
-    const result = Math.random() < 0.5 ? 0 : 1; // 50/50 chance
-    const nextId = coinflipOptions[result].nextId;
-    setCurrentStoryId(nextId); // Navigate to the next part based on the coinflip
+    // Before going to the next step, check if the current model conditions trigger a special event.
+    // If modelHooks return a string, set the storyID to that string
+    var hook = modelHooks(twsModel)
+    if (hook != null) {
+      setCurrentStoryId(hook)
+    }
+    else {
+      // If no hook, go to the next item
+      setCurrentStoryId(nextId);
+    }
   };
 
   // Handles name submission
@@ -40,15 +42,16 @@ function App() {
     setLoading(false);  // Text has finished rendering
   };
 
-  // Fetch the current story or fallback to a default message if the story is undefined
-  const currentStory = storyData[currentStoryId] || { text: 'No story available.', options: [], location: "BlueSky" };
-
+  // Replace xxx with the name of the player
   const getPersonalizedStory = (storyText, userName) => {
     return storyText.replace('xxx', userName);
   };
 
-  const choiceOptions = currentStory.choices?.(twsModel) || [];
-
+  
+  // Fetch the current story or fallback to a default message if the story is undefined
+  const currentStory = storyData[currentStoryId] || { text: 'No story available.', options: [], location: "BlueSky" };
+  const choiceOptions = currentStory.choices?.(twsModel) || []; 
+  
   return (
     <Container
       sx={{
@@ -106,18 +109,6 @@ function App() {
                 handleChoice={handleChoice}
                 disabled={loading}
               />
-            ) : currentStory.coinflip ? (
-              <Box textAlign="center" mt={2}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => handleCoinflip(currentStory.coinflip)}
-                  fullWidth
-                  disabled={loading}
-                >
-                  🪙 Pile ou Face ?
-                </Button>
-              </Box>
             ) : (
               <Typography align="center" variant="h6" color="textSecondary">
                 The End.

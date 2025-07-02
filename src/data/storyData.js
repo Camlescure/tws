@@ -6,6 +6,18 @@ export var initTwsModel = {
     childrenHome: false,
 };
 
+
+// Function that takes a state as a parameter and return a step ID
+// By default it won't return anything
+export function modelHooks(twsModel) {
+    // Go back to your parents
+    if (twsModel.mood <= 0) {
+        return "FIN5"
+    }
+
+    return null
+}
+
 const storyData = {
     "0": {
         text: "Comme chaque matin, tu te réveilles, il est 5h. Tu as toujours été une lève-tôt, c'est important, il faut préparer le petit déjeuner de toute la famille. Qui ne rêve pas de se lever avec l'odeur du café fumant ? Tu sors de ton lit en douceur pour ne pas réveiller ton mari, et quitte la chambre",
@@ -329,12 +341,11 @@ const storyData = {
         location: "Bouh",
         emoji: "🐐"
     },
-
-    "FIN2": {
-        text: "En prenant son téléphone, le médecin t'annonce d'une voix dure: 'C'est inadmissible. Comment osez-vous tenir des propos pareils ? Vous n'êtes qu'une ingrate. Vous pensez à ce que votre mari endure chaque jour au bureau ? A la difficulté d'être un homme dans notre société actuelle.. Vraiment, tout part à volo. On ne peut plus rien dire. Il n'y a plus de saisons. J'appelle immédiatement l'hôpital psychatrique, vous êtes hystérique, nous allons vous faire interner. Votre mari sera salement déçu.'",
-        choices: () => [], 
-        location: "Hopital",
-        emoji: "😡"
+    "FIN5": {
+        text: "Ton mari est à bout ! Qui t'a élevée de la sorte ? Lui qui pensait avoir épousé une maîtresse de maison exemplaire a marié une catin, ambassadrice des goûts frivoles et dangereux. Il te ramène chez tes parents : visiblement l'éducation est à revoir... 📏",
+        choices: () => [],
+        location: "Parents",
+        emoji: "💔🫵🥺"
     }
 };
 
