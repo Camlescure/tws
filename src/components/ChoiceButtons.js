@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button, Box } from '@mui/material';
-import { twsModel } from '../data/storyData';
 
 const ChoiceButtons = ({ options, handleChoice, twsModel, disabled }) => {
     return (

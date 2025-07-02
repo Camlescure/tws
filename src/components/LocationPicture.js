@@ -4,6 +4,7 @@ import CouisinePicture from '../assets/couisine.jpg';
 import DressingPicture from '../assets/dressing.jpg';
 import BouhPicture from '../assets/bouh.jpg';
 import ChambreEnfantPicture from '../assets/chambre_enfant.jpg';
+import ParentsPicture from '../assets/parents.jpg';
 
 const LocationsImages = {
     Couisine: CouisinePicture,
@@ -11,6 +12,7 @@ const LocationsImages = {
     Chambre: ChambrePicture,
     Bouh: BouhPicture,
     ChambreEnfant: ChambreEnfantPicture,
+    Parents: ParentsPicture,
 };
 
 const LocationPicture = ({ place: location }) => {

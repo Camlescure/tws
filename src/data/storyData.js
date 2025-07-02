@@ -1,8 +1,22 @@
 export var initTwsModel = {
     mood: 50,
     pilou: false,
-    wallet: 30
+    wallet: 30,
+    children: 0,
+    childrenHome: false,
 };
+
+
+// Function that takes a state as a parameter and return a step ID
+// By default it won't return anything
+export function modelHooks(twsModel) {
+    // Go back to your parents
+    if (twsModel.mood <= 0) {
+        return "FIN5"
+    }
+
+    return null
+}
 
 const storyData = {
     "0": {
@@ -97,6 +111,12 @@ const storyData = {
         choices: () => [],
         location: "Bouh",
         emoji: "🐐"
+    },
+    "FIN5": {
+        text: "Ton mari est à bout ! Qui t'a élevée de la sorte ? Lui qui pensait avoir épousé une maîtresse de maison exemplaire a marié une catin, ambassadrice des goûts frivoles et dangereux. Il te ramène chez tes parents : visiblement l'éducation est à revoir... 📏",
+        choices: () => [],
+        location: "Parents",
+        emoji: "💔🫵🥺"
     }
 };
 
