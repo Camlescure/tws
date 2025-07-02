@@ -47,6 +47,8 @@ function App() {
     return storyText.replace('xxx', userName);
   };
 
+  const choiceOptions = currentStory.choices?.(twsModel) || [];
+
   return (
     <Container
       sx={{
@@ -95,11 +97,12 @@ function App() {
               onTextLoadComplete={handleTextLoadComplete}
             />
             {/* Check if there are options or a coinflip */}
-            {currentStory.choices() && currentStory.choices().length > 0 ? (
+
+            {choiceOptions && choiceOptions.length > 0 ? (
               <ChoiceButtons
                 twsModel={twsModel}
                 setTwsModel={setTwsModel}
-                options={currentStory.choices()}
+                options={choiceOptions}
                 handleChoice={handleChoice}
                 disabled={loading}
               />

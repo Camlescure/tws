@@ -4,6 +4,11 @@ import CouisinePicture from '../assets/couisine.jpg';
 import DressingPicture from '../assets/dressing.jpg';
 import BouhPicture from '../assets/bouh.jpg';
 import ChambreEnfantPicture from '../assets/chambre_enfant.jpg';
+import BusPicture from '../assets/bus.jpg';
+import GaragePicture from '../assets/garage.jpg';
+import SupermarchePicture from '../assets/supermarche.jpg';
+import HopitalPicture from '../assets/hopital.jpg';
+import MedecinPicture from '../assets/medecin.jpg';
 
 const LocationsImages = {
     Couisine: CouisinePicture,
@@ -11,6 +16,11 @@ const LocationsImages = {
     Chambre: ChambrePicture,
     Bouh: BouhPicture,
     ChambreEnfant: ChambreEnfantPicture,
+    Bus: BusPicture,
+    Garage: GaragePicture,
+    Supermarche: SupermarchePicture,
+    Hopital: HopitalPicture,
+    Medecin: MedecinPicture,
 };
 
 const LocationPicture = ({ place: location }) => {
