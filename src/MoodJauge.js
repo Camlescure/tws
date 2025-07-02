@@ -1,6 +1,5 @@
 import React from 'react';
 import './MoodJauge.css';
-import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import avatarImg from './assets/avatar.png';
 import { Typography } from '@mui/material';
