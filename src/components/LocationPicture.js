@@ -9,6 +9,7 @@ import GaragePicture from '../assets/garage.jpg';
 import SupermarchePicture from '../assets/supermarche.jpg';
 import HopitalPicture from '../assets/hopital.jpg';
 import MedecinPicture from '../assets/medecin.jpg';
+import SalonPicture from '../assets/salon.jpg'
 
 const LocationsImages = {
     Couisine: CouisinePicture,
@@ -21,6 +22,7 @@ const LocationsImages = {
     Supermarche: SupermarchePicture,
     Hopital: HopitalPicture,
     Medecin: MedecinPicture,
+    Salon: SalonPicture,
 };
 
 const LocationPicture = ({ place: location }) => {

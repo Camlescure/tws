@@ -70,7 +70,7 @@ const storyData = {
         location: "ChambreEnfant"
     },
     "4a": {
-        text: "Jean-Eude, ton troisième, te répond d'une voix faible : 'Je me sens malade mère'. Effectivement, en posant ta main sur son front, tu le sens brûlant. C'est sûr, il ne pourra pas aller à l'école aujourd'hui",
+        text: "Jean-Eude, le petit dernier, te répond d'une voix faible : 'Je me sens malade mère'. Effectivement, en posant ta main sur son front, tu le sens brûlant. C'est sûr, il ne pourra pas aller à l'école aujourd'hui",
         choices: () => [
             { text: "'Reste à la maison mon coeur, maman va s'occuper de toi.'", next: (twsModel) => { twsModel.childrenHome = true; return "5" }}
         ],
@@ -80,7 +80,7 @@ const storyData = {
         text: "Tu prépares le petit déjeuner des enfants.",
         choices: () => [
             { text: "Tu leur concoctes un bon petit déjeuner, ils ont besoin de force pour leur journée.", next: (twsModel) => { 
-                if (twsModel.wallet >= 5*twsModel.children){
+                if (twsModel.wallet >= 5*twsModel.children) {
                     twsModel.wallet -= 5*twsModel.children;
                     return  "5a" 
                 }
@@ -133,8 +133,144 @@ const storyData = {
     },
 
     "8": {
-        text: "Arrivée au supermarché, tu choisis les produits qu'il y a sur ta liste",
-        choices: () => [],
+        text: "Arrivée au supermarché, tu choisis les produits qu'il y a sur ta liste. Tu commences par le rayon bière, ton mari t'as rappelé ce matin qu'il avait bu la dernière hier soir.",
+        choices: () => [
+            { text: "Un pack de Mosbrau, finalement une bière ça reste une bière. Il coûte 2€.", next: (twsModel) => {
+                if (twsModel.wallet >= 2){
+                    twsModel.wallet -= 2;
+                    twsModel.mood -= 10;
+                    return "8b"
+                } else {
+                    return "8a"
+                }
+            }},
+            { text: "Un pack de 1664, un grand classique. Il coûte 5€.", next: (twsModel) => {
+                if (twsModel.wallet >= 5){
+                    twsModel.wallet -= 5;
+                    twsModel.mood += 15;
+                    return "8b"
+                } else {
+                    return "8a"
+                }
+            }},
+            { text: "Tu n'as pas assez d'argent pour ce genre de frivolité. Ton mari s'en passera.", next: (twsModel) => { twsModel.mood -= 15; return "8b" }}
+        ],
+        location: "Supermarche"
+    },
+
+    "8a": {
+        text: "Tu n'as pas assez d'argent pour offrir ce pack de bière à ton mari. Prend autre chose, ou ne prend rien... Et subis les conséquences de ton incapacité à gérer le budget familial.",
+        choices: () => [
+            { text: "Que vas-tu faire ?", next: () => "8" }
+        ],
+        location: "Supermarche"
+    },
+
+    "8b": {
+        text: "Prochaine étape, la viande pour le dîner de ce soir.",
+        choices: () => [
+            { text: "Une belle entrecôte qui apportera toutes les protéines nécessaires à la virilité de ton mari. Elle coûte 15€.", next: (twsModel) => {
+                if (twsModel.wallet >= 15){
+                    twsModel.wallet -= 15;
+                    twsModel.mood += 10;
+                    return "8d"
+                } else {
+                    return "8c"
+                }
+            }},
+            { text: "De la viande hâchée, tu feras des lasagnes, les enfants vont sauter de joie. Le paquet coûte 7€.", next: (twsModel) => {
+                if (twsModel.wallet >= 5){
+                    twsModel.wallet -= 5;
+                    twsModel.mood -= 10;
+                    return "8d"
+                } else {
+                    return "8c"
+                }
+            }},
+            { text: "Tu n'as pas assez d'argent pour payer de la viande. Ta famille mangera de la soupe de pommes de terre, comme les jours précédents.", next: (twsModel) => { twsModel.mood -= 15; return "8d" }}
+        ],
+        location: "Supermarche"
+    },
+
+    "8c": {
+        text: "Tu n'as pas assez d'argent pour acheter cette viande. Prends autre chose, ou ne prend rien. Et subis les conséquences de ton incapacité à gérer le budget familial.",
+        choices: () => [
+            { text: "Que vas-tu faire ?", next: () => "8b" }
+        ],
+        location: "Supermarche"
+    },
+
+    "8d": {
+        text: "Tu te diriges maintenant vers le rayon hygiène féminine. Tu n'as pas réussi à tomber enceinte, donc tu vas bientôt avoir tes menstruations. Quelles protection tu choisi ?",
+        choices: () => [
+            { text: "Un paquet de serviettes hygiéniques, c'est quand même le minimum. Il coûte 5€.", next: (twsModel) => {
+                if (twsModel.wallet >= 5){
+                    twsModel.wallet -= 5;
+                    twsModel.mood -= 10;
+                    return "8f"
+                } else {
+                    return "8e"
+                }
+            }},
+            { text: "Tu es mal à l'aise d'utiliser ton budget pour ce genre de produit. Tu prends simplement un paquet de coton, et tu fabriqueras toi même tes tampons. Il coûte 2€.", next: (twsModel) => {
+                if (twsModel.wallet >= 2){
+                    twsModel.wallet -= 2;
+                    twsModel.mood -= 10;
+                    return "8f"
+                } else {
+                    return "8e"
+                }
+            }},
+            { text: "C'est de ta faute si tu n'as pas réussi à féconder les spermatozoïdes de ton mari. Ta famille n'a pas à partir de ton infertilité. Tu ne prends rien et tu te débrouilleras.", next: () => "8f" }
+        ],
+        location: "Supermarche"
+    },
+
+    "8e": {
+        text: "Tu n'as pas assez d'argent pour t'offrir ce luxe d'hygiène. Prends autre chose. Ou ne prend rien.",
+        choices: () => [
+            { text: "Que vas-tu faire ?", next: () => "8d" }
+        ],
+        location: "Supermarche"
+    },
+
+    "8f": {
+        text: "Le dernier rayon est celui des céréales, pour le petit déjeuner des enfants.",
+        choices: () => [
+            { text: "Un paquet de Chocapic, ça donnera un peu de joie dans leurs petits yeux. Il coûte 5€.", next: (twsModel) => {
+                if (twsModel.wallet >= 5){
+                    twsModel.wallet -= 5;
+                    return "8h"
+                } else {
+                    return "8g"
+                }
+            }},
+            { text: "Des flocons d'avoine. Simple. Pas cher. Bon pour la santé. Cela coûte 2€.", next: (twsModel) => {
+                if (twsModel.wallet >= 2){
+                    twsModel.wallet -= 2;
+                    return "14"
+                } else {
+                    return "8g"
+                }
+            }},
+            { text: "C'est de ta faute si tu n'as pas réussi à féconder les spermatozoïdes de ton mari. Ta famille n'a pas à partir de ton infertilité. Tu ne prends rien et tu te débrouilleras.", next: () => "8f" }
+        ],
+        location: "Supermarche"
+    },
+
+    "8g": {
+        text: "Tu n'as pas assez d'argent pour acheter ces céréales. Prends autre chose. Ou ne prend rien. Et subis les conséquences",
+        choices: () => [
+            { text: "Que vas-tu faire ?", next: () => "8f" }
+        ],
+        location: "Supermarche"
+    },
+
+    "8h": {
+        text: "Des chocapics ?? Tu as oublié que Jean-Eude, ton dernier, était diabétique ? Félicitations, il a fait une crise, et n'a pas survécu. ⚰️",
+        choices: () => [
+            { text: "Mère indigne.", next: (twsModel) => { twsModel.children -= 1; return "14" }}
+        ],
         location: "Supermarche"
     },
 
@@ -156,7 +292,7 @@ const storyData = {
     },
 
     "11": { 
-        text: "'Je ne m'en sors pas, avec toutes les tâches ménagères... Mon mari est si strict et il m'aide très rarement avec les enfants..'", 
+        text: "'Je ne m'en sors pas, avec toutes les tâches ménagères... Mon mari est si strict et il m'aide très rarement avec les enfants. Et la façon dont il s'adresse à moi, c'est horrible, je vis un calvaire.'", 
         choices: () => [
             { text: "..." , next: () => "12" },
         ],
@@ -179,6 +315,14 @@ const storyData = {
         location: "Medecin"
     },
 
+    "14" : {
+        text: "Retour à la maison après les courses, tu as à peine le temps de tout ranger que tu entends la voiture de ton mari dans l'allée. Vite, quand il passe la porte d'entrée, tu t'apprêtes d'aller à sa rencontre.",
+        choices: () => [
+            { text: "blabla", next: () => "blabla" }
+        ],
+        location: "Salon"
+    },
+
     "FIN1": {
         text: "0 enfant ! Réveille toi ma grande ! On t'héberge pas pour ta laine ! Il s'agirait de s'y filer, ton mari a besoin d'une descendance.",
         choices: () => [],
@@ -187,7 +331,7 @@ const storyData = {
     },
 
     "FIN2": {
-        text: "En prenant son téléphone, le médecin t'annonce d'une voix dure: 'C'est inadmissible. Comment osez-vous tenir des propos pareil ? Vous n'êtes qu'une ingrate. Vous pensez à ce que votre mari endure chaque jour au bureau ? A la difficulté d'être un homme dans notre société actuelle.. Vraiment, tout part à volo. On ne peut plus rien dire. Il n'y a plus de saisons. J'appelle immédiatement l'hôpital psychatrique, vous êtes hystérique, nous allons vous faire interner. Votre mari sera salement déçu.'",
+        text: "En prenant son téléphone, le médecin t'annonce d'une voix dure: 'C'est inadmissible. Comment osez-vous tenir des propos pareils ? Vous n'êtes qu'une ingrate. Vous pensez à ce que votre mari endure chaque jour au bureau ? A la difficulté d'être un homme dans notre société actuelle.. Vraiment, tout part à volo. On ne peut plus rien dire. Il n'y a plus de saisons. J'appelle immédiatement l'hôpital psychatrique, vous êtes hystérique, nous allons vous faire interner. Votre mari sera salement déçu.'",
         choices: () => [], 
         location: "Hopital",
         emoji: "😡"
